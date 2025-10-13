@@ -2,10 +2,23 @@ const colors = {
   reset: "\x1b[0m",
   red: "\x1b[31m",
   green: "\x1b[32m",
+  bold: "\x1b[1m",
   yellow: "\x1b[33m",
   cyan: "\x1b[36m",
 };
+function delay(ms) {
+  const timer = Date.now();
+  while (Date.now() - timer < ms) {
 
+  }
+}
+function fillTheScrren(char) {
+  let str = '';
+  for (let index = 0; index < 10; index++) {
+    str += char.repeat(100);
+    console.log(str);
+  }
+}
 function printTicToe(grid) {
   console.clear();
   console.log("\n      TIC TAC TOE\n");
@@ -17,15 +30,24 @@ function printTicToe(grid) {
     let c1 = grid[i][1];
     let c2 = grid[i][2];
 
-    if (c0 !== "❌" && c0 !== "⭕") c0 = "   ";
-    if (c1 !== "❌" && c1 !== "⭕") c1 = "   ";
-    if (c2 !== "❌" && c2 !== "⭕") c2 = "   ";
+    if (c0 !== "  ❌ " && c0 !== "  ⭕ ") c0 = "   ";
+    if (c1 !== "  ❌ " && c1 !== "  ⭕ ") c1 = "   ";
+    if (c2 !== "  ❌ " && c2 !== "  ⭕ ") c2 = "   ";
 
-    console.log(`  ${i + 1}  |${c0}|${c1}|${c2}|`);
+    console.log(`  ${i + 1}  ${c0}${c1}${c2}`);
     console.log("     +---+---+---+");
   }
 
   console.log();
+}
+function computerPlays(grid, cmpValue) {
+  for (let index = 0; index < grid.length; index++) {
+    for (let index2 = 0; index2 < 3; index2++) {
+      if (grid[index][index2] === "   ") {
+        grid[index][index2] = cmpValue;
+      }
+    }
+  }
 }
 
 function putTheInput(grid, dimension, value) {
@@ -70,6 +92,7 @@ function evaluateTheGrid(grid) {
   return 0;
 }
 
+
 function ticTacToe(grid) {
   printTicToe(grid);
 
@@ -78,7 +101,7 @@ function ticTacToe(grid) {
     console.log(colors.yellow + "Game aborted by user." + colors.reset);
     return "EXIT";
   }
-  if (!putTheInput(grid, input1, "❌")) {
+  if (!putTheInput(grid, input1, "  ❌ ")) {
     return "wrong Input Was Given";
   }
 
@@ -89,7 +112,7 @@ function ticTacToe(grid) {
   }
   if (evaluateTheGrid(grid)) {
     printTicToe(grid);
-    return "❌";
+    return "  ❌ ";
   }
 
   printTicToe(grid);
@@ -98,7 +121,7 @@ function ticTacToe(grid) {
     console.log(colors.yellow + "Game aborted by user." + colors.reset);
     return "EXIT";
   }
-  if (!putTheInput(grid, input2, "⭕")) {
+  if (!putTheInput(grid, input2, "  ⭕ ")) {
     return "wrong Input Was Given";
   }
 
@@ -109,9 +132,8 @@ function ticTacToe(grid) {
   }
   if (evaluateTheGrid(grid)) {
     printTicToe(grid);
-    return "⭕";
+    return "  ⭕ ";
   }
-
   return grid;
 }
 
@@ -121,13 +143,18 @@ function mainTicToe(grid) {
   if (result === "EXIT") {
     return;
   }
-  if (result === "❌") {
-    console.log(colors.red + "🎉 Player ❌ has won!" + colors.reset);
-    return;
+  if (result === "  ❌ ") {
+    fillTheScrren("  ❌ ");
+    delay(2000);
+    console.clear();
+    console.log(`${colors.red}${colors.bold}🎉 Player ❌ has won!${colors.reset}`); return;
   }
-  if (result === "⭕") {
-    console.log(colors.green + "🎉 Player ⭕ has won!" + colors.reset);
-    return;
+  if (result === "  ⭕ ") {
+    fillTheScrren("  ⭕ ");
+    delay(2000);
+    console.clear();
+    console.log(`${colors.red}${colors.bold}🎉 Player ⭕ has won!${colors.reset}`); return;
+
   }
   if (result === "DRAW") {
     console.log(colors.cyan + "🤝 It's a Draw! No one won." + colors.reset);
