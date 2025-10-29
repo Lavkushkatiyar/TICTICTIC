@@ -20,7 +20,7 @@ function delay(ms) {
 function fillTheScrren(char) {
   let str = '';
   for (let index = 0; index < 10; index++) {
-    str += char.repeat(100);
+    str += char.repeat(10);
     console.log(str);
   }
 }
@@ -73,7 +73,10 @@ function findWiningMove(grid, value) {
 
 function computerPlays(grid,value,userFirst) {
 if(userFirst) {
-  putTheInput(grid,[1,1],value);
+ const middleInput =  putTheInput(grid,[1,1],value);
+ if(middleInput) {
+  return;
+ }
 }
   let k;
   if (k = findWiningMove(grid,value)) {
@@ -133,7 +136,7 @@ function ticTacToe(grid , para ) {
   }
   if (isSomeoneWon(grid)) {
     printTicToe(grid);
-    return "❌ ";
+    return "⭕ ";
   }
   printTicToe(grid);
   computerPlays(grid,"❌ ",para);
@@ -150,13 +153,13 @@ function ticTacToe(grid , para ) {
   }
   if (isSomeoneWon(grid)) {
     printTicToe(grid);
-    return "⭕ ";
+    return "❌ ";
   }
   return grid;
 }
 
-function mainTicToe(grid) {
-  const result = ticTacToe(grid , true);
+function mainTicToe(grid,chance) {
+  const result = ticTacToe(grid , chance);
 
   if (result === "EXIT") {
     return;
@@ -172,6 +175,7 @@ function mainTicToe(grid) {
     fillTheScrren("⭕ ");
     delay(2000);
     console.clear();
+        printTicToe(grid);
     console.log(`${colors.red}${colors.bold}🎉 Player ⭕  has won!${colors.reset}`); return;
 
   }
@@ -193,7 +197,7 @@ function main() {
     ["   ", "   ", "   "],
     ["   ", "   ", "   "],
   ];
-  mainTicToe(grid);
+  mainTicToe(grid,true);
 
 
   if (confirm("Do you wanna play again ? ")) {
